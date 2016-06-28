@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
+using Microsoft.Office.Interop.Outlook;
 
 namespace CallMeBack
 {
@@ -14,8 +15,15 @@ namespace CallMeBack
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            ShowForm();
+		{
+			var outlookObj = new Application();
+			var tmp = outlookObj.CreateItem(OlIte‌​mType.olAppointmentItem);
+			MAPIFolder calendar = outlookObj.Session.GetDefaultFolder(OlDefaultFolders.olFolderCalendar);
+			Explorer explorer = outlookObj.ActiveExplorer();
+			Folder folder = explorer.CurrentFolder as Folder;
+			View view = explorer.CurrentView as View;
+			MailItem mail = view as MailItem;
+			ShowForm();
         }
 
             
